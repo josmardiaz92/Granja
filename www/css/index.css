@@ -1,0 +1,15 @@
+body{
+    height: 100vh;
+}
+
+.container-fluid{
+    height: 100vh;
+}
+
+.barra{
+    display: flex;
+    justify-content: center;
+    background: black;
+    border: solid 1px lavender;
+    color: aliceblue;
+}
