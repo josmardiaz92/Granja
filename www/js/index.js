@@ -120,11 +120,11 @@ function mostrarDetalles(objeto){
         case 'animales':
             contenido=`
                 <div class="row row-cols-3 g-1 mt-3">                    
-                    ${animales.map(elemento=>{
+                    ${animales.map((elemento,index)=>{
                         const edad=obtenerEdad(elemento.fechaNacimiento)
                         return `
                             <div class="col muestra">
-                                <div class="card" style="width: 18rem;">
+                                <div class="card"  onclick="rellenarModal('${objeto}',${index})" data-bs-toggle="modal" data-bs-target="#modal">
                                     <img src="${elemento.imagen}" class="card-img-top p-2" alt="...">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">${elemento.especie}</h5>
@@ -214,7 +214,7 @@ function agregar(objeto){
     mostrarDetalles(objeto);
 }
 
-function rellenarModal(pantalla){
+function rellenarModal(pantalla,index){
     const modalContent=modal.querySelector('.modal-content');
     switch (pantalla) {
         case 'animales':
@@ -228,7 +228,7 @@ function rellenarModal(pantalla){
                         <div class="input-group">
                             <label for="especie" class="input-group-text">Especie: </label>
                             <select class="form-select" id="especie">
-                                <option selected value="">Seleccione...</option>
+                                <option selected ${index>=0 ? `value="${animales[index].especie}">${animales[index].especie}` : `value="">Seleccione...` } </option>
                                 <option value="vacuna">Vacuna</option>
                                 <option value="pollo">Pollo</option>
                             </select>
@@ -238,27 +238,27 @@ function rellenarModal(pantalla){
                         <div class="input-group">
                             <label for="produccion" class="input-group-text">Produccion: </label>
                             <select class="form-select" id="produccion">
-                                <option selected value="">Seleccione...</option>
+                                <option selected ${index>=0 ? `value="${animales[index].produccion}">${animales[index].produccion}` : `value="">Seleccione...` } </option>
                                 <option value="leche">Leche</option>
                                 <option value="cria">Cria</option>
                             </select>
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Peso del animal" aria-describedby="pesoLabel" id="peso">
+                        <input ${index>=0 ? `value="${animales[index].peso}"` : ''} type="text" class="form-control" placeholder="Peso del animal" aria-describedby="pesoLabel" id="peso">
                         <span class="input-group-text" id="pesoLabel">Peso</span>
                     </div>
                     <div class="mb-3">
                         <div class="input-group">
                             <label for="fecha" class="input-group-text">Fecha de nacimiento: </label>
-                            <input type="date" class="form-control" id="fecha">
+                            <input ${index>=0 ? `value="${animales[index].fechaNacimiento}"` : ''} type="date" class="form-control" id="fecha">
                         </div>
                     </div>
                     <div class="mb-3">
                         <div class="input-group">
                             <label for="lote" class="input-group-text">Lote: </label>
                             <select class="form-select" id="lote">
-                                <option selected value="">Seleccione...</option>
+                                <option selected ${index>=0 ? `value="${animales[index].lote}">${animales[index].lote}` : `value="">Seleccione...` } </option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                             </select>
@@ -268,7 +268,7 @@ function rellenarModal(pantalla){
                         <div class="input-group">
                             <label for="sexo" class="input-group-text">Sexo: </label>
                             <select class="form-select" id="sexo">
-                                <option selected value="">Seleccione...</option>
+                                <option selected ${index>=0 ? `value="${animales[index].sexo}">${animales[index].sexo}` : `value="">Seleccione...` } </option>
                                 <option value="macho">Macho</option>
                                 <option value="hembra">Hembra</option>
                             </select>
@@ -279,7 +279,7 @@ function rellenarModal(pantalla){
                             <i class="fa-solid fa-camera fa-2xl" onclick="confirmar()"></i>
                         </div>
                         <div>
-                            <img src="" class="img-fluid" id="foto">
+                            <img src="${index>=0 ? animales[index].imagen : ''}" class="img-fluid" id="foto">
                         </div>
                     </div>
                 </form>
@@ -349,4 +349,3 @@ function tomarFoto(opcion){
         console.log('Error al tomar la foto: ' + message);
     }
 }
-
