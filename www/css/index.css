@@ -1,14 +1,56 @@
-body{
-    height: 100vh;
-}
-
 .container-fluid{
     height: 100vh;
 }
 
+/* ------------------- HEAD ------------------- */
+
+
+/* ------------------- BODY ------------------- */
+body{
+    height: 100vh;
+}
+
+.muestra{
+    display: flex;
+    justify-content: center;
+}
+
+.muestra ul{
+    list-style: none;
+}
+
+/* ------------------- FOOT ------------------- */
 .barra{
     display: flex;
     justify-content: center;
+    background: black;
+    border: solid 1px lavender;
+    color: aliceblue;
+    height: 50px;
+    align-items: center;
+}
+
+.btnHome{
+    height: 40px;
+    background: black;
+    border: solid 1px lavender;
+    color: aliceblue;
+    height: 60px;
+    top: -30px;
+}
+
+.barra:active, .btnHome:active{
+    background: lavender;
+    color: black;
+    border: solid 1px black;
+}
+
+
+#btnAgregar{
+    bottom: 55px;
+}
+
+#btnAgregar button{
     background: black;
     border: solid 1px lavender;
     color: aliceblue;

@@ -7,38 +7,67 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
         <link rel="stylesheet" href="bootstrap-5.3.3-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="fontawesome-free-6.6.0-web/css/all.min.css">
         <link rel="stylesheet" href="css/index.css">
         <title>Granja</title>
     </head>
     <body>
         <div class="container-fluid">
-            <div class="row fixed-top" id="head">
-
+            <div class="row d-none" id="head">
+                <div class="input-group mt-2 px-5">
+                    <input class="form-control" type="search" placeholder="Buscar">
+                    <button type="button" class="btn btn-secondary">filtrar</button>
+                </div>
             </div>
-            <div id="body">
+            <div id="body" class=" pb-5">
                 
             </div>
-            <div class="row fixed-bottom" id="footer">
-                <div class="col-2 barra">
-                    <span>Animales</span>
+            <div class="row fixed-bottom d-flex justify-content-end" id="btnAgregar">
+                <div class="col d-flex">
+                    <button class="btn btn-secondary ms-auto me-2" data-bs-toggle="modal" data-bs-target="#modal">
+                        <i class="fa-solid fa-plus fa-lg"></i>
+                    </button>
                 </div>
-                <div class="col-3 barra">
-                    <span>Lotes</span>
-                </div>
-                <div class="col-2 barra" onclick="mostrarInicio()">
-                    <span>Inicio</span>
-                </div>
-                <div class="col-3 barra">
-                    <span>Insumos</span>
-                </div>
-                <div class="col-2 barra">
-                    <span>Perfil</span>
+            </div>
+            <div class="row fixed-bottom m-0" id="footer">
+                <div class="row m-0 p-0 position-relative">
+                    <div class="col-2 barra" onclick="mostrarDetalles('animales')">
+                        <i class="fa-solid fa-2xl fa-cow"></i>
+                    </div>
+                    <div class="col-4 barra">
+                        <i class="fa-solid fa-2xl fa-circle-nodes me-3"></i>
+                    </div>
+                    <div class="col-xl-1 col-lg-1 col-md-1 col-2 btnHome position-absolute rounded-circle" id="btnInicio" onclick="mostrarInicio()">
+                        <div class="row d-flex justify-content-center h-100 align-items-center">
+                            <div class="col d-flex justify-content-center">
+                                <i class="fa-solid fa-house fa-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 barra" onclick="mostrarDetalles('insumos')">
+                        <i class="fa-solid fa-2xl fa-store ms-3"></i>
+                    </div>
+                    <div class="col-2 barra">
+                        <i class="fa-solid fa-2xl fa-user"></i>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- <script src="cordova.js"></script> -->
+        <div class="contenedorModales">
+            <div class="modal fade" data-bs-backdrop="static" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script src="cordova.js"></script>
         <script src="bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+        <script src="fontawesome-free-6.6.0-web/js/all.min.js"></script>
         <script src="js/index.js"></script>
     </body>
 </html>
