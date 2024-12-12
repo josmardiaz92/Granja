@@ -24,7 +24,7 @@
             </div>
             <div class="row fixed-bottom d-flex justify-content-end" id="btnAgregar">
                 <div class="col d-flex">
-                    <button class="btn btn-secondary ms-auto me-2" data-bs-toggle="modal" data-bs-target="#modal">
+                    <button class="btn btn-secondary ms-auto me-2" data-bs-toggle="modal" data-bs-target="#modalAnimales">
                         <i class="fa-solid fa-plus fa-lg"></i>
                     </button>
                 </div>
@@ -55,10 +55,78 @@
         </div>
 
         <div class="contenedorModales">
-            <div class="modal fade" data-bs-backdrop="static" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal fade" data-bs-backdrop="static" id="modalAnimales" tabindex="-1" aria-labelledby="modalAnimalesLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
-                        
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modalAnimalesLabel">Agregar</h1>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <label for="especie" class="input-group-text">Especie: </label>
+                                        <select class="form-select" id="especie">
+                                            <option value="" selected>Seleccione... </option>
+                                            <option value="vacuna">Vacuna</option>
+                                            <option value="pollo">Pollo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <label for="produccion" class="input-group-text">Produccion: </label>
+                                        <select class="form-select" id="produccion">
+                                            <option value="" selected>Seleccione...</option>
+                                            <option value="leche">Leche</option>
+                                            <option value="cria">Cria</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Peso del animal" aria-describedby="pesoLabel" id="peso">
+                                    <span class="input-group-text" id="pesoLabel">Peso</span>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <label for="fecha" class="input-group-text">Fecha de nacimiento: </label>
+                                        <input type="date" class="form-control" id="fecha">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <label for="lote" class="input-group-text">Lote: </label>
+                                        <select class="form-select" id="lote">
+                                            <option selected value="">Seleccione... </option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <label for="sexo" class="input-group-text">Sexo: </label>
+                                        <select class="form-select" id="sexo">
+                                            <option selected value="">Seleccione... </option>
+                                            <option value="macho">Macho</option>
+                                            <option value="hembra">Hembra</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 mt-3 d-block">
+                                    <div class="d-flex justify-content-center mb-4">
+                                        <i class="fa-solid fa-camera fa-2xl" onclick="confirmar()"></i>
+                                    </div>
+                                    <div>
+                                        <img src="" class="img-fluid" id="foto">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="agregar('animales')">Guardar</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,8 +2,8 @@ const contenedorApp=document.getElementById('body');
 const head=document.getElementById('head');
 const btnInicio=document.getElementById('btnInicio');
 const btnAgregar=document.getElementById('btnAgregar');
-const modal=document.getElementById('modal');
-const instModal=new bootstrap.Modal(modal);
+const modalAnimales=document.getElementById('modalAnimales');
+const instModalAnimales=new bootstrap.Modal(modalAnimales);
 var pantalla='';
 const animales=obtenerAnimales();
 
@@ -115,7 +115,6 @@ function mostrarDetalles(objeto){
     btnAgregar.classList.remove('d-none')    
     var contenido;
     pantalla=objeto;
-    rellenarModal(pantalla);
     switch (objeto) {
         case 'animales':
             contenido=`
@@ -124,7 +123,7 @@ function mostrarDetalles(objeto){
                         const edad=obtenerEdad(elemento.fechaNacimiento)
                         return `
                             <div class="col muestra">
-                                <div class="card"  onclick="rellenarModal('${objeto}',${index})" data-bs-toggle="modal" data-bs-target="#modal">
+                                <div class="card" data-bs-toggle="modal" data-bs-target="#modal">
                                     <img src="${elemento.imagen}" class="card-img-top p-2" alt="...">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">${elemento.especie}</h5>
@@ -210,92 +209,8 @@ function agregar(objeto){
         default:
             break;
     }
-    instModal.hide();
+    instModalAnimales.hide();
     mostrarDetalles(objeto);
-}
-
-function rellenarModal(pantalla,index){
-    const modalContent=modal.querySelector('.modal-content');
-    switch (pantalla) {
-        case 'animales':
-            modalContent.innerHTML=`
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalLabel">Agregar</h1>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label for="especie" class="input-group-text">Especie: </label>
-                            <select class="form-select" id="especie">
-                                <option selected ${index>=0 ? `value="${animales[index].especie}">${animales[index].especie}` : `value="">Seleccione...` } </option>
-                                <option value="vacuna">Vacuna</option>
-                                <option value="pollo">Pollo</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label for="produccion" class="input-group-text">Produccion: </label>
-                            <select class="form-select" id="produccion">
-                                <option selected ${index>=0 ? `value="${animales[index].produccion}">${animales[index].produccion}` : `value="">Seleccione...` } </option>
-                                <option value="leche">Leche</option>
-                                <option value="cria">Cria</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input ${index>=0 ? `value="${animales[index].peso}"` : ''} type="text" class="form-control" placeholder="Peso del animal" aria-describedby="pesoLabel" id="peso">
-                        <span class="input-group-text" id="pesoLabel">Peso</span>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label for="fecha" class="input-group-text">Fecha de nacimiento: </label>
-                            <input ${index>=0 ? `value="${animales[index].fechaNacimiento}"` : ''} type="date" class="form-control" id="fecha">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label for="lote" class="input-group-text">Lote: </label>
-                            <select class="form-select" id="lote">
-                                <option selected ${index>=0 ? `value="${animales[index].lote}">${animales[index].lote}` : `value="">Seleccione...` } </option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label for="sexo" class="input-group-text">Sexo: </label>
-                            <select class="form-select" id="sexo">
-                                <option selected ${index>=0 ? `value="${animales[index].sexo}">${animales[index].sexo}` : `value="">Seleccione...` } </option>
-                                <option value="macho">Macho</option>
-                                <option value="hembra">Hembra</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-3 mt-3 d-block">
-                        <div class="d-flex justify-content-center mb-4">
-                            <i class="fa-solid fa-camera fa-2xl" onclick="confirmar()"></i>
-                        </div>
-                        <div>
-                            <img src="${index>=0 ? animales[index].imagen : ''}" class="img-fluid" id="foto">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        `;
-        break;
-    
-        default:
-            break;
-    }
-    modalContent.innerHTML+=`
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="rellenarModal('${pantalla}')">Close</button>
-            <button type="button" class="btn btn-primary" onclick="agregar('${pantalla}')">Guardar</button>
-        </div>
-        `;
 }
 
 function obtenerEdad(fecha){
@@ -312,32 +227,35 @@ function obtenerEdad(fecha){
 
 function confirmar(){
     navigator.notification.confirm(
-        'Elija una opción',
-            (boton)=>{tomarFoto(boton)},            
-                'Atención',           
-                ['Camara','Album']     
+        'Elija una opción', //mensaje
+            (boton)=>{tomarFoto(boton)}, //callback   
+                'Atención', //titulo  
+                ['Camara','Album'] //botones
             );
 }
 
-function tomarFoto(opcion){
-    if(opcion==='camara'){
+function tomarFoto(boton){
+    var opcion;
+    if(boton===1){
         opcion=Camera.PictureSourceType.CAMERA;
-    }else if(opcion==='album'){
+    }else if(boton===2){
         opcion=Camera.PictureSourceType.PHOTOLIBRARY;
     }
     var options={
-        quality: 50,
+        quality: 100,
         destinationType: Camera.DestinationType.FILE_URI,
         sourceType: opcion,
         correctOrientation: true,
         //saveToPhotoAlbum: true, // Guarda la foto en la galería del dispositivo
         encodingType: Camera.EncodingType.JPEG
     };
+
     navigator.camera.getPicture(onSuccess, onFail, options);
+
     function onSuccess(imageURI) {
         const win=(fileEntry)=>{
             const img=fileEntry.toURL();
-            const img2=modal.querySelector('img');
+            const img2=document.getElementById('foto');
             img2.src=img;
         };
         const fail=(error)=>{
@@ -345,7 +263,20 @@ function tomarFoto(opcion){
         }
         window.resolveLocalFileSystemURL(imageURI,win,fail);
     }
+
     function onFail(message){
         console.log('Error al tomar la foto: ' + message);
     }
 }
+
+function limpiarModalAnimales(){
+    document.getElementById('especie').value='';
+    document.getElementById('produccion').value='';
+    document.getElementById('peso').value='';
+    document.getElementById('fecha').value='';
+    document.getElementById('lote').value='';
+    document.getElementById('sexo').value='';
+    document.getElementById('foto').sr='';
+}
+
+modalAnimales.addEventListener('hidden.bs.modal',limpiarModalAnimales)
