@@ -54,3 +54,9 @@ body{
     border: solid 1px lavender;
     color: aliceblue;
 }
+
+
+.divisiones{
+    height: 60px;
+    width: 60px;
+}

@@ -2,6 +2,7 @@ const contenedorApp=document.getElementById('body');
 const head=document.getElementById('head');
 const btnInicio=document.getElementById('btnInicio');
 const btnAgregar=document.getElementById('btnAgregar');
+const btnModal=document.getElementById('btnModal');
 const modalAnimales=document.getElementById('modalAnimales');
 const instModalAnimales=new bootstrap.Modal(modalAnimales);
 var pantalla='';
@@ -117,13 +118,15 @@ function mostrarDetalles(objeto){
     pantalla=objeto;
     switch (objeto) {
         case 'animales':
+            pantalla='animales'
+            btnModal.setAttribute('data-bs-target', '#modalAnimales');
             contenido=`
                 <div class="row row-cols-3 g-1 mt-3">                    
                     ${animales.map((elemento,index)=>{
                         const edad=obtenerEdad(elemento.fechaNacimiento)
                         return `
                             <div class="col muestra">
-                                <div class="card" data-bs-toggle="modal" data-bs-target="#modal">
+                                <div class="card" onclick="seleccionar(${index},'${objeto}')">
                                     <img src="${elemento.imagen}" class="card-img-top p-2" alt="...">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">${elemento.especie}</h5>
@@ -151,6 +154,8 @@ function mostrarDetalles(objeto){
             `
             break;
         case 'insumos':
+            pantalla='insumos'
+            btnModal.setAttribute('data-bs-target', '#modalInsumos');
             contenido=`
                 <div class="row row-cols-3 g-1 mt-3">                    
                     ${insumos.map(elemento=>
@@ -173,6 +178,7 @@ function mostrarDetalles(objeto){
             `
         break
         default:
+            
             break;
     }
     contenedorApp.innerHTML=contenido;
@@ -280,3 +286,93 @@ function limpiarModalAnimales(){
 }
 
 modalAnimales.addEventListener('hidden.bs.modal',limpiarModalAnimales)
+
+function seleccionar(index,objeto){
+    switch (objeto) {
+        case 'animales':
+            document.getElementById('especie').value=animales[index].especie;
+            document.getElementById('produccion').value='';
+            document.getElementById('peso').value='';
+            document.getElementById('fecha').value='';
+            document.getElementById('lote').value='';
+            document.getElementById('sexo').value='';
+            document.getElementById('foto').sr='';
+            instModalAnimales.show();
+            break;
+    
+        default:
+            break;
+    }
+}
+
+function obtenerUbicacion(){
+    const onError=(error)=>{
+        console.log('Error al obtener ubicacion'+error);
+    }
+
+    const onSuccess=(position)=>{
+        var ubicacion=`https://www.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}`;
+        console.log(ubicacion)
+    }
+
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+}
+
+/* const p1=document.getElementById('01')
+const p2=document.getElementById('02')
+const p3=document.getElementById('03')
+var pA='';
+const btnAtras=document.getElementById('atras');
+
+p1.addEventListener('click',()=>{
+    p1.classList.add('d-none')
+    p2.classList.remove('d-none');
+    pA='02'
+})
+
+p2.addEventListener('click',()=>{
+    p2.classList.add('d-none')
+    p3.classList.remove('d-none')
+    pA='03'
+})
+
+p3.addEventListener('click',()=>{
+    alert('happy')
+})
+
+btnAtras.onclick=()=>{
+    atras(pantalla)
+}
+ */
+/* btnAtras.addEventListener('click',()=>{
+    atras(pA)
+}) */
+
+function atras(pantalla){
+    switch(pantalla){
+        case 'animales':
+            mostrarInicio()
+        break
+        case 'insumos':
+            mostrarInicio()
+        break
+        case 'modalAnimales':
+            instModalAnimales.hide();
+            pantalla='animales'
+        break
+        default:
+            alert('no hay pantalla que mostrar');
+        break
+    }
+}
+
+modalAnimales.addEventListener('show.bs.modal',()=>{
+    pantalla='modalAnimales';
+})
+
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady(){
+    document.addEventListener("backbutton", ()=>{atras(pantalla)}, false);
+}
